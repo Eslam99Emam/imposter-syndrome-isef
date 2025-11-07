@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Impostor Syndrome Test</title>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ------------------
+       Global / Reset
+       ------------------ */
+        :root {
+            --navy: #1A2A44;
+            --beige: #F8EBD8;
+            --light-blue: #E8F0F7;
+            --white: #FFFFFF;
+            --accent: #A0A0A0;
+            --maxw: 1000px;
+            --shadow: 0 8px 20px rgba(26, 42, 68, 0.08);
+            --radius: 14px;
+        }
+
+        /* Basic reset */
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            color: var(--navy);
+            background: linear-gradient(180deg, var(--beige) 0%, #fff 4%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+        }
+
+        /* Container */
+        .container {
+            max-width: var(--maxw);
+            margin: 90px auto;
+            padding: 40px;
+            border-radius: 18px
+        }
+
+        /* ------------------
+       Header / Navbar
+       ------------------ */
+        header.site-header {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 18px rgba(10, 20, 40, 0.06);
+            z-index: 80
+        }
+
+        .nav-inner {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .brand h1 {
+            font-family: Playfair Display, serif;
+            margin: 0;
+            font-size: 20px;
+            color: var(--navy)
+        }
+
+        nav a {
+            color: var(--navy);
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: 600
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center
+        }
+
+        /* hamburger (mobile) */
+        .hamburger {
+            display: none;
+            border: 0;
+            background: transparent;
+            font-size: 22px;
+            color: var(--navy)
+        }
+
+        .nav-mobile {
+            display: none
+        }
+
+        /* ------------------
+       Sections
+       ------------------ */
+        section {
+            margin: 40px auto;
+            padding: 36px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        section.fade-in {
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all .7s cubic-bezier(.2, .9, .3, 1)
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: none
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(248, 235, 216, 0.6), rgba(255, 255, 255, 0));
+            padding: 40px
+        }
+
+        .hero .hero-text {
+            flex: 1
+        }
+
+        .hero h2 {
+            font-family: Playfair Display, serif;
+            font-size: 34px;
+            margin: 0;
+            color: var(--navy)
+        }
+
+        .hero p.lead {
+            color: var(--accent);
+            margin-top: 8px
+        }
+
+        .hero .cta {
+            margin-top: 18px
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--navy);
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 0;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 6px 16px rgba(26, 42, 68, 0.12);
+            transition: transform .15s ease, box-shadow .15s ease
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(26, 42, 68, 0.14)
+        }
+
+        .hero-ill {
+            width: 240px;
+            flex: 0 0 260px
+        }
+
+        .line-ill {
+            width: 100%;
+            height: 160px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fff, #f6f6f6);
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .line-ill svg {
+            width: 160px;
+            height: 120px;
+            opacity: 0.95
+        }
+
+        /* ------------------
+       Assessment
+       ------------------ */
+        .form-row {
+            display: flex;
+            min-height: 1000px;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 14px
+        }
+
+        label.small {
+            font-size: 14px;
+            color: var(--accent);
+            min-width: 88px
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ececec;
+            background: #fff
+        }
+
+        .questions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px
+        }
+
+        .question {
+            padding: 12px;
+            background: linear-gradient(180deg, #fff, #fbfbfb);
+            border-radius: 10px
+        }
+
+        .q-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px
+        }
+
+        .radios {
+            display: flex;
+            gap: 6px
+        }
+
+        .radios label {
+            background: #f6f6f6;
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--navy);
+            cursor: pointer
+        }
+
+        .result-box {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 10px;
+            background: var(--light-blue);
+            color: var(--navy);
+            display: none
+        }
+
+        .note-bottom {
+            font-size: 13px;
+            color: var(--accent);
+            text-align: left
+        }
+
+        /* ------------------
+       Achievements
+       ------------------ */
+        .achievements-section {
+            min-width: 90%;
+            margin: 40px auto;
+            color: #222;
+            border-radius: 12px;
+            padding: 36px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+        }
+
+        #achievementForm {
+            display: flex;
+            gap: 10px;
+        }
+
+        #achievementForm input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 15px;
+            background: #fff;
+            color: #222;
+            transition: border-color 0.2s ease;
+        }
+
+        #achievementForm input:focus {
+            border-color: #2ecc71;
+        }
+
+        #achievementForm button {
+            background: #2ecc71;
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        #achievementForm button:hover {
+            background: #27ae60;
+        }
+
+        .toggle-bar {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e9e9e9;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .toggle-bar:hover {
+            background: #ddd;
+        }
+
+        #toggleArrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            color: #2ecc71;
+            font-size: 18px;
+        }
+
+        .achievements-list {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+        }
+
+        .achievement-item {
+            width: 80%;
+            background: #f4f4f4;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            word-wrap: break-word;
+        }
+
+        .hidden {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .visible-achievements {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        @media (max-width: 600px) {
+            .achievement-item {
+                width: 100%;
+            }
+        }
+
+        /* ------------------
+       Chat
+       ------------------ */
+        .chat-box {
+            background: var(--light-blue);
+            padding: 16px;
+            border-radius: 12px
+        }
+
+        /* ------------------
+       Footer
+       ------------------ */
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--accent);
+            font-size: 14px;
+            padding: 18px
+        }
+
+        /* ------------------
+       Responsive
+       ------------------ */
+        @media(max-width:900px) {
+            .container {
+                margin: 80px 18px;
+                padding: 20px
+            }
+
+            .hero {
+                flex-direction: column
+            }
+
+            .hero-ill {
+                align-self: center
+            }
+
+            .questions {
+                grid-template-columns: 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+
+            .hamburger {
+                display: block
+            }
+
+            .nav-mobile {
+                display: block;
+                background: #fff;
+                padding: 12px;
+                border-radius: 10px;
+                position: absolute;
+                right: 20px;
+                top: 62px;
+                box-shadow: var(--shadow);
+                display: none
+            }
+
+            .nav-mobile a {
+                display: block;
+                padding: 8px 0;
+                color: var(--navy)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="site-header">
+        <div class="nav-inner">
+            <div class="brand">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <rect width="24" height="24" rx="6" fill="#F8EBD8" />
+                    <path d="M6 15c1.5-2 4.5-2 6 0" stroke="#1A2A44" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                <h1>Impostor Syndrome Test</h1>
+            </div>
+
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#home">Home</a>
+                <a href="#assessment">Assessment</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#chat">Chat</a>
+            </nav>
+
+            <button class="hamburger" id="hamb">☰</button>
+            <div class="nav-mobile" id="navMobile" aria-hidden="true">
+                <a href="#home">Home</a>
+                <a href="#assessment">Assessment</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#chat">Chat</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Hero / Introduction Section -->
+        <section id="home" class="hero fade-in">
+            <div class="hero-text">
+                <h2>Impostor Syndrome</h2>
+                <p class="lead">A feeling of self-doubt despite success.</p>
+                <p>You are not alone. Let’s begin the journey toward understanding yourself.</p>
+                <div class="cta">
+                    <button class="btn" id="startJourney">Start the Journey</button>
+                </div>
+            </div>
+            <div class="hero-ill">
+                <div class="line-ill" aria-hidden>
+                    <!-- Simple line-style illustration -->
+                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                        <g stroke="#1A2A44" stroke-width="1.6" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M10 90 Q60 10 110 70 T190 60" opacity="0.9" />
+                            <circle cx="30" cy="30" r="6" fill="#1A2A44" />
+                            <circle cx="170" cy="30" r="4" fill="#1A2A44" />
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assessment Section -->
+        <section id="assessment" class="fade-in">
+            <h3 style="font-family:Playfair Display, serif;">Self-Assessment</h3>
+            <p style="color:var(--accent);margin-top:6px">Rate each statement from 1 (Never) to 5 (Always)</p>
+
+            <!-- Optional fields -->
+            <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+                <div style="flex:1;min-width:180px">
+                    <label class="small">Name</label>
+                    <input type="text" id="userName" placeholder="اسمك (اختياري)">
+                </div>
+                <div style="flex:1;min-width:220px">
+                    <label class="small">Email</label>
+                    <input type="email" id="userEmail" placeholder="example@mail.com (اختياري)">
+                </div>
+            </div>
+
+            <!-- Questions grid -->
+            <div class="questions" id="questions">
+                <!-- 20 questions inserted by JS -->
+            </div>
+
+            <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                <button class="btn" id="getResult">Get Result</button>
+                <div class="result-box" id="resultBox" role="status"></div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="achievements-section">
+            <form id="achievementForm">
+                <input type="text" id="achievementInput" placeholder="Write your achievement..." />
+                <button type="submit">Save</button>
+            </form>
+
+            <div id="achievementsToggle" class="toggle-bar">
+                <span>All achievements</span>
+                <span id="toggleArrow">&#9654;</span>
+            </div>
+
+            <div id="achievementsList" class="achievements-list hidden"></div>
+        </section>
+
+        <!-- Chat Section -->
+        <section id="chat" class="fade-in">
+            <h3 style="font-family:Playfair Display, serif;">Chat</h3>
+            <p style="color:var(--accent);margin-top:6px">I am here to listen.</p>
+            <div class="chat-box" style="margin-top:12px">
+                <p style="margin:0 0 8px 0">Prompt: What is the accomplishment that made you feel proud last time?</p>
+                <div style="display:flex;gap:8px">
+                    <input id="chatInput" placeholder="Share something small or big..."
+                        style="flex:1;padding:10px;border-radius:10px;border:1px solid #eee">
+                    <button class="btn" id="sendChat">Send</button>
+                </div>
+            </div>
+            <p class="note-bottom" style="margin-top:12px;text-align:left">Coming soon: Real conversation support</p>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div>© 2025 Impostor Syndrome Project</div>
+            <div style="margin-top:8px">This site does not replace professional help.</div>
+        </footer>
+
+    </main>
+
+    <script>
+        /* ------------------
+           Questions (Arabic) - 20 exact items
+           Note: use template literals to allow unescaped quotes inside strings
+           ------------------ */
+        const questionsArabic = [
+            `1. أشعر أن نجاحي جاء عن طريق الحظ أكثر من كفاءتي.`,
+            `2. أشك في أنني أستحق التقدير الذي أحصل عليه.`,
+            `3. أخاف أن يُكشف أنني "غير مؤهل" في أي لحظة.`,
+            `4. أقلل من إنجازاتي عندما يتحدث الناس عنها.`,
+            `5. أعتقد أن الآخرين يبالغون في تقدير قدراتي.`,
+            `6. أشعر بعدم الارتياح عندما يتلقى عملي مديحًا.`,
+            `7. أعتقد أن الناس يخطئون عندما يصفونني كـ "ناجح".`,
+            `8. أتجنب طلب المساعدة خوفًا من الظهور بمظهر الغير كفء.`,
+            `9. أشعر أنني لم أتعلم أو أنمّي كما يجب بالرغم من النتائج.`,
+            `10. أخشى المواقف الجديدة لأنني أعتقد أنني سأفشل.`,
+            `11. أقارن نفسي بالآخرين وأشعر أنني أقل منهم دائمًا.`,
+            `12. أعتقد أن أخطائي تظهر أنني "محتال".`,
+            `13. أؤجل بدء مهام مهمة لأنني أخاف ألا أؤديها بكفاءة.`,
+            `14. أعتقد أنني بحاجة إلى العمل أكثر من الآخرين لأثبت نفسي.`,
+            `15. عندما أنجح، أصفه بأنه نتيجة ظروف خارجية.`,
+            `16. أشعر بالقلق أن أي نجاح قادم ليس مستدامًا.`,
+            `17. أحدد معاييري الشخصية بصورة صارمة جدًا وأعتبر أي تقصير فشلاً.`,
+            `18. عندما أتعلم شيئًا جديدًا، أخاف أن أُظهر عدم درايتي.`,
+            `19. أعتقد أن ثقتي تبدو زائفة وأن الناس سيلاحظونها.`,
+            `20. أختبئ خلف تواضع مبالغ فيه لتجنب الاكتشاف.`
+        ];
+
+        const qContainer = document.getElementById('questions');
+        questionsArabic.forEach((qText, idx) => {
+            const q = document.createElement('div');
+            q.className = 'question';
+            // Use textContent for question label to avoid any HTML injection issues
+            const top = document.createElement('div'); top.className = 'q-top';
+            const qLabel = document.createElement('div'); qLabel.style.fontWeight = '600'; qLabel.textContent = qText;
+            const qNum = document.createElement('div'); qNum.style.color = 'var(--accent)'; qNum.style.fontSize = '13px'; qNum.textContent = (idx + 1);
+            top.appendChild(qLabel); top.appendChild(qNum);
+
+            const radios = document.createElement('div'); radios.className = 'radios';
+            for (let v = 1; v <= 5; v++) {
+                const lab = document.createElement('label');
+                const inp = document.createElement('input'); inp.type = 'radio'; inp.name = `q${idx}`; inp.value = String(v);
+                lab.appendChild(inp);
+                lab.appendChild(document.createTextNode(String(v)));
+                radios.appendChild(lab);
+            }
+
+            q.appendChild(top);
+            q.appendChild(radios);
+            qContainer.appendChild(q);
+        });
+
+        /* ------------------
+           Nav mobile toggle
+           ------------------ */
+        const hamb = document.getElementById('hamb');
+        const navMobile = document.getElementById('navMobile');
+        hamb.addEventListener('click', () => {
+            const shown = navMobile.style.display === 'block';
+            navMobile.style.display = shown ? 'none' : 'block';
+        });
+
+        /* ------------------
+           Smooth scroll from hero CTA
+           ------------------ */
+        document.getElementById('startJourney').addEventListener('click', () => {
+            document.getElementById('assessment').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Also scroll when nav links clicked (close mobile)
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', () => { navMobile.style.display = 'none' })
+        });
+
+        /* ------------------
+           Get Result logic
+           ------------------ */
+        document.getElementById('getResult').addEventListener('click', () => {
+
+            const totalQuestions = questionsArabic.length;
+            let total = 0; let answered = 0;
+            for (let i = 0; i < totalQuestions; i++) {
+                const val = document.querySelector(`input[name=q${i}]:checked`);
+                if (val) { total += Number(val.value); answered++; }
+            }
+            if (answered < totalQuestions) {
+                // allow partial but warn the user
+                if (!confirm('لم تقم بالإجابة على كل الأسئلة. تابع مع الحساب على الإجابات الحالية؟')) return;
+            }
+            // const score = total; // range 20-100 if all answered
+            // const resultBox = document.getElementById('resultBox');
+            // resultBox.style.display = 'block';
+            // let interp = '';
+            // if (score >= 20 && score <= 40) interp = 'Low';
+            // else if (score >= 41 && score <= 60) interp = 'Moderate';
+            // else if (score >= 61 && score <= 80) interp = 'High';
+            // else if (score >= 81 && score <= 100) interp = 'Very High';
+            // else interp = 'N/A';
+
+            // // show detailed message
+            // const name = document.getElementById('userName').value.trim();
+            // resultBox.innerHTML = '';
+            // const lines = [];
+            // // lines.push(`النتيجة: ${score} / ${totalQuestions * 5}`);
+            // // lines.push(`التفسير: ${interp}`);
+            // // lines.push('ملاحظة: هذا اختبار بسيط وغير تشخيصي. إن كانت المشاعر تؤثر على حياتك اليومية تواصل مع مختص.');
+
+            // const wrapper = document.createElement('div');
+            // const title = document.createElement('div'); title.style.fontWeight = '700'; title.style.marginBottom = '6px'; title.textContent = lines[0];
+            // const interpDiv = document.createElement('div'); interpDiv.style.marginBottom = '8px'; interpDiv.innerHTML = ``;
+
+            // const note = document.createElement('div'); note.style.fontSize = '13px'; note.style.color = 'var(--accent)'; note.textContent = lines[2];
+            // wrapper.appendChild(title); wrapper.appendChild(interpDiv); wrapper.appendChild(note);
+
+            // const emailBtnWrap = document.createElement('div'); emailBtnWrap.style.marginTop = '10px';
+            // const emailBtn = document.createElement('button'); emailBtn.className = 'btn'; emailBtn.id = 'sendEmail'; emailBtn.textContent = 'Send to my email';
+            // emailBtnWrap.appendChild(emailBtn);
+            // wrapper.appendChild(emailBtnWrap);
+
+            // resultBox.appendChild(wrapper);
+            // document.getElementById('getResult').style.display = 'none';
+
+            // // Attach email button handler (mailto)
+            // emailBtn.addEventListener('click', () => {
+            //     const email = document.getElementById('userEmail').value.trim();
+            //     const subject = encodeURIComponent('Impostor Syndrome Test Result');
+            //     const body = encodeURIComponent(`${name ? 'Name: ' + name + "\n" : ''}Score: ${score} / ${totalQuestions * 5}\nInterpretation: ${interp}\n\nThis is a self-assessment result.`);
+            //     const mailto = `mailto:${email}?subject=${subject}&body=${body}`;
+            //     if (email) window.location.href = mailto;
+            //     else {
+            //         // fallback: open mailto without recipient so user can add
+            //         window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            //     }
+            // });
+
+
+        });
+
+        /* ------------------
+           Achievements save (localStorage)
+           ------------------ */
+        const form = document.getElementById('achievementForm');
+        const input = document.getElementById('achievementInput');
+        const list = document.getElementById('achievementsList');
+        const toggle = document.getElementById('achievementsToggle');
+        const arrow = document.getElementById('toggleArrow');
+
+        const achievements = JSON.parse(localStorage.getItem('achievements') || '[]');
+        achievements.forEach(addAchievementToList);
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = input.value.trim();
+            if (!text) return;
+            achievements.push(text);
+            localStorage.setItem('achievements', JSON.stringify(achievements));
+            addAchievementToList(text);
+            input.value = '';
+        });
+
+        toggle.addEventListener('click', () => {
+            const isHidden = list.classList.contains('hidden');
+            list.classList.toggle('hidden', !isHidden);
+            list.classList.toggle('visible-achievements', isHidden);
+            arrow.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
+        });
+
+        function addAchievementToList(text) {
+            const item = document.createElement('div');
+            item.className = 'achievement-item';
+            item.textContent = text;
+            list.appendChild(item);
+        }
+        /* ------------------
+           Chat placeholder
+           ------------------ */
+        document.getElementById('sendChat').addEventListener('click', () => {
+            const t = document.getElementById('chatInput').value.trim();
+            if (!t) { alert('اكتب شيئًا'); return }
+            alert('Message placeholder sent — شكراً لمشاركتك');
+            document.getElementById('chatInput').value = '';
+        });
+
+        /* ------------------
+           Fade-in on scroll
+           ------------------ */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (en.isIntersecting) en.target.classList.add('visible');
+            })
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.fade-in').forEach(s => io.observe(s));
+
+        /* Accessibility: close mobile nav on outside click */
+        document.addEventListener('click', (e) => {
+            if (!navMobile.contains(e.target) && e.target !== hamb) navMobile.style.display = 'none';
+        });
+
+    </script>
+
+</body>
+
+</html>
