@@ -39,7 +39,7 @@
             margin: 0;
             font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
             color: var(--navy);
-            background: linear-gradient(180deg, var(--beige) 0%, #fff 4%);
+            /* background: linear-gradient(180deg, var(--beige) 0%, #fff 4%); */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             scroll-behavior: smooth;
@@ -124,17 +124,6 @@
             background: var(--white);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-        }
-
-        section.fade-in {
-            opacity: 0;
-            transform: translateY(8px);
-            transition: all .7s cubic-bezier(.2, .9, .3, 1)
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: none
         }
 
         /* Hero */
@@ -279,6 +268,62 @@
             font-size: 13px;
             color: var(--accent);
             text-align: left
+        }
+
+        #resultModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            /* dim background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .result-content {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: translateY(-20px);
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .result-content h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 12px;
+            color: var(--navy);
+        }
+
+        .result-content p {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 15px;
+            line-height: 1.5;
         }
 
         /* ------------------
@@ -493,14 +538,53 @@
 
     <main class="container">
 
+        <!-- Consent Modal -->
+        <div id="consentModal"
+            style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
+            <div
+                style="background: white; padding: 40px; border-radius: 16px; max-width: 600px; margin: 20px; max-height: 80vh; overflow-y: auto;">
+                <h3 style="font-family: Playfair Display, serif; margin-top: 0; color: var(--navy);">شروط المشاركة</h3>
+                <div style="line-height: 1.8; color: #333; margin: 20px 0;">
+                    <p><strong>مرحبًا، قبل أن تبدأ في استخدام المنصة، نود إعلامك بما يلي:</strong></p>
+                    <ul style="padding-right: 20px; text-align: right;">
+                        <li style="margin-bottom: 12px;">المشاركة في هذه المنصة جزء من بحث علمي يهدف إلى دراسة تجربة
+                            المستخدمين مع الموقع وفهم تأثيره على التوعية بمتلازمة المحتال.</li>
+                        <li style="margin-bottom: 12px;">جميع البيانات التي ستشاركها أثناء استخدامك للموقع ستُحفظ بشكل
+                            سري ولن يتم الكشف عن هويتك لأي جهة خارجية.</li>
+                        <li style="margin-bottom: 12px;">المشاركة اختيارية بالكامل، ويمكنك التوقف في أي وقت دون أي تأثير
+                            على تجربتك أو حقك في استخدام المنصة.</li>
+                        <li style="margin-bottom: 12px;">سيتم استخدام المعلومات التي تقدمها فقط لأغراض البحث العلمي
+                            ولتحسين المنصة وخدماتها، ولن تُشارك مع أي أطراف ثالثة بشكل فردي.</li>
+                        <li style="margin-bottom: 12px;">باستخدامك للموقع والموافقة على الشروط، فإنك تؤكد فهمك لمحتوى
+                            هذه الرسالة وأنك توافق طواعية على المشاركة في البحث.</li>
+                    </ul>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 24px;">
+                    <button class="btn" id="acceptConsent" style="flex: 1;">✅ أؤكد موافقتي على الشروط</button>
+                    <button class="btn" id="declineConsent" style="flex: 1; background: #999;">رفض</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Hero / Introduction Section -->
         <section id="home" class="hero fade-in">
             <div class="hero-text">
-                <h2>Impostor Syndrome</h2>
-                <p class="lead">A feeling of self-doubt despite success.</p>
-                <p>You are not alone. Let’s begin the journey toward understanding yourself.</p>
+                <h2>متلازمة المحتال (Impostor Syndrome)</h2>
+                <p class="lead" style="font-size: 16px; line-height: 1.7;">
+                    متلازمة المحتال هي حالة نفسية تجعل الشخص يشعر بأن إنجازاته غير مستحقة، وأن نجاحه مجرد صدفة أو نتيجة
+                    مجهود الآخرين، رغم امتلاكه للكفاءة الحقيقية. يعيش المصاب بها حالة مستمرة من الشك في ذاته، والخوف من
+                    أن يُكتشف "كـمحتال" لا يستحق ما وصل إليه.
+                </p>
+                <p style="margin-top: 12px; line-height: 1.6;">
+                    تظهر هذه المتلازمة عادةً لدى الطلاب والمتفوقين وأصحاب الطموح العالي، وقد تؤثر على الثقة بالنفس، وعلى
+                    القدرة على تقبّل النجاح أو الاستمتاع به.
+                </p>
+                <p style="margin-top: 10px; line-height: 1.6; color: var(--navy); font-weight: 500;">
+                    تهدف منصّتنا إلى تقديم فهم أعمق لهذه الحالة، وتوضيح أسبابها، وأنماطها، وكيف يمكن التعامل معها بوعي
+                    وهدوء، من خلال محتوى مبسّط وبوت داعم يساعد المستخدم خطوة بخطوة.
+                </p>
                 <div class="cta">
-                    <button class="btn" id="startJourney">Start the Journey</button>
+                    <button class="btn" id="startJourney">ابدأ الرحلة</button>
                 </div>
             </div>
             <div class="hero-ill">
@@ -546,6 +630,14 @@
             </div>
         </section>
 
+        <div id="resultModal" style="display:none;">
+            <div class="result-content">
+                <div id="resultWrapper"></div>
+                <button class="btn" id="closeResult">Close</button>
+            </div>
+        </div>
+
+
         <!-- Achievements Section -->
         <section id="achievements" class="achievements-section">
             <form id="achievementForm">
@@ -564,16 +656,24 @@
         <!-- Chat Section -->
         <section id="chat" class="fade-in">
             <h3 style="font-family:Playfair Display, serif;">Chat</h3>
-            <p style="color:var(--accent);margin-top:6px">I am here to listen.</p>
+            <p style="color:var(--accent);margin-top:6px">أنا هنا عشان أسمعك.</p>
+
             <div class="chat-box" style="margin-top:12px">
-                <p style="margin:0 0 8px 0">Prompt: What is the accomplishment that made you feel proud last time?</p>
-                <div style="display:flex;gap:8px">
-                    <input id="chatInput" placeholder="Share something small or big..."
+
+                <!-- نافذة الرسائل -->
+                <div id="chatWindow"
+                    style="height:300px; overflow-y:auto; background:#fff; border-radius:10px; padding:12px; border:1px solid #ddd;">
+                </div>
+
+                <!-- إدخال الرسالة -->
+                <div style="display:flex;gap:8px;margin-top:12px">
+                    <input id="chatInput" placeholder="اكتب اللي حاسس بيه أو سؤالك..."
                         style="flex:1;padding:10px;border-radius:10px;border:1px solid #eee">
-                    <button class="btn" id="sendChat">Send</button>
+                    <button class="btn" id="sendChat">إرسال</button>
                 </div>
             </div>
-            <p class="note-bottom" style="margin-top:12px;text-align:left">Coming soon: Real conversation support</p>
+
+            <p class="note-bottom" style="margin-top:12px;text-align:left">المحادثة تعمل الآن بدعم Gemini</p>
         </section>
 
         <!-- Footer -->
@@ -584,7 +684,25 @@
 
     </main>
 
+
+    <script src="./gemini.js"></script>
     <script>
+
+        /* ------------------ Consent Modal ------------------ */
+
+        const consentModal = document.getElementById('consentModal');
+
+        const consentAccept = document.getElementById('acceptConsent');
+        const consentDecline = document.getElementById('declineConsent');
+
+        consentAccept.onclick = (e) => {
+            consentModal.style.display = 'none';
+        }
+
+        consentDecline.onclick = (e) => {
+            history.back();
+        }
+
         /* ------------------
            Questions (Arabic) - 20 exact items
            Note: use template literals to allow unescaped quotes inside strings
@@ -664,62 +782,41 @@
         document.getElementById('getResult').addEventListener('click', () => {
 
             const totalQuestions = questionsArabic.length;
-            let total = 0; let answered = 0;
+            let total = 0, answered = 0;
             for (let i = 0; i < totalQuestions; i++) {
                 const val = document.querySelector(`input[name=q${i}]:checked`);
                 if (val) { total += Number(val.value); answered++; }
             }
             if (answered < totalQuestions) {
-                // allow partial but warn the user
                 if (!confirm('لم تقم بالإجابة على كل الأسئلة. تابع مع الحساب على الإجابات الحالية؟')) return;
             }
-            // const score = total; // range 20-100 if all answered
-            // const resultBox = document.getElementById('resultBox');
-            // resultBox.style.display = 'block';
-            // let interp = '';
-            // if (score >= 20 && score <= 40) interp = 'Low';
-            // else if (score >= 41 && score <= 60) interp = 'Moderate';
-            // else if (score >= 61 && score <= 80) interp = 'High';
-            // else if (score >= 81 && score <= 100) interp = 'Very High';
-            // else interp = 'N/A';
+            const score = total;
+            let interp = '';
+            if (score <= 40) interp = 'Low';
+            else if (score <= 60) interp = 'Moderate';
+            else if (score <= 80) interp = 'High';
+            else interp = 'Very High';
 
-            // // show detailed message
-            // const name = document.getElementById('userName').value.trim();
-            // resultBox.innerHTML = '';
-            // const lines = [];
-            // // lines.push(`النتيجة: ${score} / ${totalQuestions * 5}`);
-            // // lines.push(`التفسير: ${interp}`);
-            // // lines.push('ملاحظة: هذا اختبار بسيط وغير تشخيصي. إن كانت المشاعر تؤثر على حياتك اليومية تواصل مع مختص.');
+            const name = document.getElementById('userName').value.trim();
+            const modal = document.getElementById('resultModal');
+            const wrapper = document.getElementById('resultWrapper');
 
-            // const wrapper = document.createElement('div');
-            // const title = document.createElement('div'); title.style.fontWeight = '700'; title.style.marginBottom = '6px'; title.textContent = lines[0];
-            // const interpDiv = document.createElement('div'); interpDiv.style.marginBottom = '8px'; interpDiv.innerHTML = ``;
+            wrapper.innerHTML = `
+        <h2>نتيجتك</h2>
+        <p><strong>الاسم:</strong> ${name || 'غير مدخل'}</p>
+        <p><strong>النقاط:</strong> ${score} / ${totalQuestions * 5}</p>
+        <p><strong>التفسير:</strong> ${interp}</p>
+        <p style="font-size:13px;color:var(--accent);margin-top:10px;">
+            ملاحظة: هذا اختبار بسيط وغير تشخيصي. إن كانت المشاعر تؤثر على حياتك اليومية تواصل مع مختص.
+        </p>
+    `;
 
-            // const note = document.createElement('div'); note.style.fontSize = '13px'; note.style.color = 'var(--accent)'; note.textContent = lines[2];
-            // wrapper.appendChild(title); wrapper.appendChild(interpDiv); wrapper.appendChild(note);
+            modal.style.display = 'flex';
 
-            // const emailBtnWrap = document.createElement('div'); emailBtnWrap.style.marginTop = '10px';
-            // const emailBtn = document.createElement('button'); emailBtn.className = 'btn'; emailBtn.id = 'sendEmail'; emailBtn.textContent = 'Send to my email';
-            // emailBtnWrap.appendChild(emailBtn);
-            // wrapper.appendChild(emailBtnWrap);
-
-            // resultBox.appendChild(wrapper);
-            // document.getElementById('getResult').style.display = 'none';
-
-            // // Attach email button handler (mailto)
-            // emailBtn.addEventListener('click', () => {
-            //     const email = document.getElementById('userEmail').value.trim();
-            //     const subject = encodeURIComponent('Impostor Syndrome Test Result');
-            //     const body = encodeURIComponent(`${name ? 'Name: ' + name + "\n" : ''}Score: ${score} / ${totalQuestions * 5}\nInterpretation: ${interp}\n\nThis is a self-assessment result.`);
-            //     const mailto = `mailto:${email}?subject=${subject}&body=${body}`;
-            //     if (email) window.location.href = mailto;
-            //     else {
-            //         // fallback: open mailto without recipient so user can add
-            //         window.location.href = `mailto:?subject=${subject}&body=${body}`;
-            //     }
-            // });
-
-
+            // زر إغلاق
+            document.getElementById('closeResult').onclick = () => {
+                modal.style.display = 'none';
+            };
         });
 
         /* ------------------
@@ -760,22 +857,60 @@
         /* ------------------
            Chat placeholder
            ------------------ */
-        document.getElementById('sendChat').addEventListener('click', () => {
-            const t = document.getElementById('chatInput').value.trim();
-            if (!t) { alert('اكتب شيئًا'); return }
-            alert('Message placeholder sent — شكراً لمشاركتك');
-            document.getElementById('chatInput').value = '';
-        });
+        function addMessage(content, sender) {
+            const chatWindow = document.getElementById('chatWindow');
 
-        /* ------------------
-           Fade-in on scroll
-           ------------------ */
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(en => {
-                if (en.isIntersecting) en.target.classList.add('visible');
-            })
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.fade-in').forEach(s => io.observe(s));
+            const msg = document.createElement('div');
+            msg.style.padding = "10px 14px";
+            msg.style.margin = "10px 0";
+            msg.style.borderRadius = "10px";
+            msg.style.maxWidth = "80%";
+            msg.style.lineHeight = "1.5";
+            msg.style.whiteSpace = "pre-wrap";
+            msg.style.fontSize = "15px";
+
+            if (sender === "user") {
+                msg.style.background = "#dff0ff";
+                msg.style.marginLeft = "auto";
+            } else {
+                msg.style.background = "#f2f2f2";
+                msg.style.marginRight = "auto";
+            }
+
+            msg.textContent = content;
+            chatWindow.appendChild(msg);
+
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        /* حدث الإرسال */
+        document.getElementById('sendChat').addEventListener('click', async () => {
+            const input = document.getElementById('chatInput');
+            const userText = input.value.trim();
+            if (!userText) return;
+
+            addMessage(userText, "user");
+            input.value = "";
+
+            // مؤشر كتابة
+            const chatWindow = document.getElementById('chatWindow');
+            const typing = document.createElement('div');
+            typing.id = "typingIndicator";
+            typing.textContent = "المساعد يكتب...";
+            typing.style.background = "#f2f2f2";
+            typing.style.margin = "10px 0";
+            typing.style.padding = "10px 14px";
+            typing.style.borderRadius = "10px";
+            typing.style.width = "120px";
+            chatWindow.appendChild(typing);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+            // إرسال للـGemini
+            const reply = await sendToGemini(userText);
+
+            typing.remove();
+            addMessage(reply, "assistant");
+        });
 
         /* Accessibility: close mobile nav on outside click */
         document.addEventListener('click', (e) => {
