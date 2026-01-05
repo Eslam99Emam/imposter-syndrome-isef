@@ -1,5 +1,6 @@
+import { GoogleGenAI } from "@google/genai";
 
-const GEMINI_API_KEY = "AIzaSyChcxwqCkwCAgZkQdYs16iH5VvChzrOip4";
+const ai = new GoogleGenAI({ apiKey: "AIzaSyDm0nf7F0MF4iAqtrA3naX4ABVSW-ZPdZw" });
 
 const ASSISTANT_SYSTEM_PROMPT = `
 أنت مساعد افتراضي متخصص في دعم الأشخاص الذين يعانون من مشاعر مرتبطة بمتلازمة المحتال.
@@ -17,23 +18,14 @@ const ASSISTANT_SYSTEM_PROMPT = `
 
 
 async function sendToGemini(userMessage) {
-    const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json", 'x-goog-api-key': GEMINI_API_KEY },
-            body: JSON.stringify({
-                contents: [
-                    {
-                        parts: [{ text: ASSISTANT_SYSTEM_PROMPT }]
-                    },
-                    {
-                        parts: [{ text: userMessage }]
-                    }
-                ]
-            })
-        }
-    );
+    const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        config: {
+            systemInstruction: ASSISTANT_SYSTEM_PROMPT,
+        },
+        contents: userMessage,
+    });
+    console.log(response.text);
 
     const data = await response.json();
     try {
